@@ -1,0 +1,23 @@
+align-items-center {
+    position: relative;
+}
+
+.border {
+    margin: 100px;
+    padding: 100px;
+    background-color: white; 
+    color: black;
+    text-align: justify;
+}
+
+.pokedex {
+    text-align: justify;
+}
+
+.pokedex-form {
+    text-align: justify;
+}
+
+.pokedex-form-btn {
+    text-align: justify;
+}
