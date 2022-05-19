@@ -1,3 +1,4 @@
+from sqlalchemy import ForeignKey
 from app import db, login
 from flask_login import UserMixin 
 from datetime import datetime as dt, timedelta
@@ -52,9 +53,42 @@ class Product(db.Model):
     description = db.Column(db.Text)
     price = db.Column(db.Float)
     img = db.Column(db.String)
-    category_id = db.Column(db.ForeignKey('category.id'))
+    category_id = db.Column(db.Integer)
     created_on = db.Column(db.DateTime, index=True, default=dt.utcnow)
-    
+
+    def __repr__(self):
+        return f'<Item: {self.id} | {self.name}>'
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def to_dict(self):
+        item_data = {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "price": self.price,
+            "img": self.img,
+            "created_on": self.created_on
+        }
+        return item_data
+
+    def from_dict(self, item_data):
+        for field in ["name", "description", "price", "img",]:
+            if field in item_data:
+                setattr(self, field, item_data[field])
+
+class Cart(db.Model):
+    cart_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, ForeignKey('user.id'))
+    product_id = db.Column(db.Integer, ForeignKey('product.id'))
+
+
 
 
 

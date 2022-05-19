@@ -39,7 +39,7 @@ def register():
         except:
             flash("Whoops! Looks like there was an unexpected error on our end. Please try again later!", 'danger')
             return render_template('register.html.j2', form = form)
-        flash(f"Welcome!", 'success')
+        flash(f"Welcome {form.first_name.data} for registering!", 'success')
         return redirect(url_for('auth.login'))
     return render_template('register.html.j2', form = form)
 
